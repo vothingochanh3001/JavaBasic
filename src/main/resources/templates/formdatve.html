@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đặt Vé Xem Phim</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-image: url('https://png.pngtree.com/background/20210710/original/pngtree-movie-ticket-cinema-poster-design-picture-image_1051310.jpg');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      color: #fff;
+      animation: fadeInBody 1s ease-in-out;
+    }
+
+    @keyframes fadeInBody {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    form {
+      background: rgba(0, 0, 0, 0.8); /* Nền tối */
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      width: 100%;
+      max-width: 500px;
+      color: #fff; /* Màu chữ sáng */
+      animation: slideUp 1s ease-out;
+    }
+
+    @keyframes slideUp {
+      0% { transform: translateY(20px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    form h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #1e90ff; /* Màu tiêu đề sáng */
+      animation: fadeInText 1s ease-in-out;
+    }
+
+    @keyframes fadeInText {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    form label {
+      font-weight: bold;
+      margin-bottom: 5px;
+      display: block;
+      color: #ccc; /* Màu chữ sáng cho label */
+    }
+
+    form input, form select, form button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #444; /* Viền tối */
+      border-radius: 5px;
+      font-size: 16px;
+      transition: transform 0.2s ease, border 0.3s ease;
+      background-color: #333; /* Nền input tối */
+      color: #fff; /* Màu chữ sáng trong input */
+    }
+
+    form input:focus, form select:focus {
+      border-color: #1e90ff; /* Viền sáng khi focus */
+      transform: scale(1.02);
+    }
+
+    form button {
+      background-color: #1e90ff; /* Màu nền nút sáng */
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    form button:hover {
+      background-color: #4682b4; /* Màu nền nút khi hover */
+      transform: scale(1.05);
+    }
+
+    form input::placeholder {
+      color: #999; /* Màu placeholder sáng */
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group:last-of-type {
+      margin-bottom: 0;
+    }
+
+    .success-message {
+      display: none;
+      background-color: #28a745;
+      color: white;
+      padding: 15px;
+      margin-bottom: 20px;
+      text-align: center;
+      border-radius: 5px;
+      font-size: 18px;
+      animation: slideIn 0.5s ease-out;
+    }
+
+    @keyframes slideIn {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(0); }
+    }
+  </style>
+</head>
+<body>
+<form method="post" action="/datphim/save" onsubmit="validateInput(event)">
+  <h2>Đặt Vé Xem Phim</h2>
+
+  <div class="success-message" id="successMessage">
+    Đặt vé thành công! Cảm ơn bạn đã sử dụng dịch vụ.
+  </div>
+
+  <div class="form-group">
+    <label for="cccd">Số Chứng Minh Nhân Dân</label>
+    <input type="text" id="cccd" name="cccd" placeholder="Nhập số CMND/CCCD" required>
+  </div>
+
+  <div class="form-group">
+    <label for="hoten">Họ và tên</label>
+    <input type="text" id="hoten" name="hoten" placeholder="Nhập họ và tên" required>
+  </div>
+
+  <div class="form-group">
+    <label for="sdt">Số điện thoại</label>
+    <input type="text" id="sdt" name="sdt" placeholder="Nhập số điện thoại" required>
+  </div>
+
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" placeholder="Nhập email" required>
+  </div>
+
+  <div class="form-group">
+    <label for="marapchieu">Mã Rạp Chiếu</label>
+    <select id="marapchieu" name="marapchieu" required>
+      <option value="">Chọn rạp chiếu</option>
+      <th:block th:each="rap : ${raplist}">
+        <option th:value="${rap.marapchieu}" th:text="${rap.diachi}"></option>
+      </th:block>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="maphim">Mã Phim</label>
+    <select id="maphim" name="maphim" required>
+      <option value="">Chọn phim</option>
+      <th:block th:each="phim : ${phimlist}">
+        <option th:value="${phim.maphim}" th:text="${phim.tenphim}"></option>
+      </th:block>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="ngayxem">Ngày Xem</label>
+    <input type="date" id="ngayxem" name="ngayxem" required>
+  </div>
+
+  <div class="form-group">
+    <label for="suatchieu">Suất Chiếu</label>
+    <input type="text" id="suatchieu" name="suatchieu" placeholder="Nhập suất chiếu" required>
+  </div>
+
+  <div class="form-group">
+    <label for="sove">Số Vé</label>
+    <input type="number" id="sove" name="sove" placeholder="Nhập số vé" required>
+  </div>
+
+  <div class="form-group">
+    <label for="vitrighe">Vị Trí Ghế</label>
+    <input type="text" id="vitrighe" name="vitrighe" placeholder="Nhập vị trí ghế" required>
+  </div>
+
+  <div class="form-group">
+    <label for="thanhtien">Thành Tiền</label>
+    <input type="text" id="thanhtien" name="thanhtien" placeholder="Nhập tổng tiền" >
+  </div>
+
+  <button type="submit">Đặt Vé</button>
+</form>
+
+<script>
+  // Kiểm tra dữ liệu đầu vào trước khi gửi đi
+  function validateInput(event) {
+    const cccd = document.getElementById("cccd").value;
+    const ngayxem = document.getElementById("ngayxem").value;
+    const sove = document.getElementById("sove").value;
+    const rap = document.getElementById("marapchieu").value;
+    const phim = document.getElementById("maphim").value;
+
+    if (!cccd || !ngayxem || !sove || !rap || !phim) {
+      alert("Vui lòng điền đầy đủ thông tin.");
+      event.preventDefault();
+    }
+  }
+</script>
+
+</body>
+</html>

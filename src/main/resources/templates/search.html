@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        /* Định dạng chung */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://png.pngtree.com/background/20210710/original/pngtree-movie-ticket-cinema-poster-design-picture-image_1051310.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            color: #fff;  /* Text color for dark mode */
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        /* Animation khi trang tải */
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7);  /* Dark background with transparency */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            animation: slideUp 0.6s ease-out;
+        }
+
+        /* Animation khi container xuất hiện */
+        @keyframes slideUp {
+            0% { transform: translateY(20px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        h1 {
+            text-align: center;
+            color: #1e90ff;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            animation: fadeInText 1s ease-in-out;
+        }
+
+        /* Animation cho tiêu đề */
+        @keyframes fadeInText {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        form {
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: space-between;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        label {
+            font-weight: bold;
+            margin-right: 10px;
+            width: 100%;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"], input[type="date"] {
+            padding: 10px;
+            width: 45%;
+            margin-bottom: 15px;
+            border: 1px solid #444;  /* Dark border */
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+            background-color: #333;  /* Dark background for input */
+            color: #fff;  /* Text color for dark mode */
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        /* Hover effect for submit button */
+        input[type="submit"]:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+
+        /* Định dạng bảng */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            animation: fadeIn 1s ease-in-out;
+            color: #fff;  /* Text color for dark mode */
+        }
+
+        .table th, .table td {
+            border: 1px solid #444;  /* Dark border */
+            padding: 12px;
+            text-align: left;
+            transition: background-color 0.3s ease;
+        }
+
+        .table th {
+            background-color: #222;  /* Dark background for header */
+            font-weight: bold;
+        }
+
+        .table tr:nth-child(even) {
+            background-color: #333;  /* Dark background for even rows */
+        }
+
+        .table tr:hover {
+            background-color: #555;  /* Hover effect for rows */
+            transform: scale(1.02);
+        }
+
+        .thead-light th {
+            background-color: #444;  /* Darker header background */
+        }
+
+        .action-button {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        /* Hover effect for delete button */
+        .action-button:hover {
+            background-color: #e53935;
+            transform: scale(1.05);
+        }
+
+        .form-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .form-group label {
+            width: 100%;
+            font-size: 16px;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="date"] {
+            width: 45%;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Quản lý Vé Xem Phim</h1>
+
+    <form method="get" action="search">
+        <div class="form-group">
+            <label>Tìm kiếm theo CCCD</label>
+            <input type="text" name="cccd" placeholder="CCCD" />
+
+            <label>Tìm kiếm theo Mã Rạp Chiếu</label>
+            <input type="text" name="marapchieu" placeholder="Ma Rap Chieu" />
+
+            <label>Tìm kiếm theo tên Phim</label>
+            <input type="text" name="maphim" placeholder="Ten Phim" />
+
+            <label>Tìm kiếm theo ngày xem </label>
+            <input type="date" name="ngayxem" placeholder="Ngay xem" />
+        </div>
+
+        <input type="submit" value="Search" />
+    </form>
+
+    <table border="1" class="table">
+        <thead class="thead-light">
+        <tr>
+            <th>Số Căn Cước Công Dân</th>
+            <th>Mã Rạp Chiếu Phim</th>
+            <th>Tên Phim</th>
+            <th>Ngày xem phim</th>
+            <th>Suất Chiếu</th>
+            <th>Số Vé</th>
+            <th>Vị trí ghế</th>
+            <th>Chức Năng</th>
+        </tr>
+        </thead>
+        <tbody>
+        <form method="get" action="delete">
+            <tr th:each=" list : ${listchitiet}">
+                <td th:text="${list.cccd}"></td>
+                <td th:text="${list.marapchieu}"></td>
+                <td th:text="${list.maphim}"></td>
+                <td th:text="${list.ngayxem}"></td>
+                <td th:text="${list.suatchieu}"></td>
+                <td th:text="${list.sove}"></td>
+                <td th:text="${list.vitrighe}"></td>
+                <td>
+                    <input type="submit" value="Delete" class="action-button" />
+                    <input type="text" name="cccd" th:value="${list.cccd}" hidden />
+                    <input type="text" name="marapchieu" th:value="${list.marapchieu}" hidden />
+                    <input type="text" name="maphim" th:value="${list.maphim}" hidden />
+                    <input type="text" name="ngayxem" th:value="${list.ngayxem}" hidden />
+                </td>
+            </tr>
+        </form>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
